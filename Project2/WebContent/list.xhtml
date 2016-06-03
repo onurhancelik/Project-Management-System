@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Proje Grup Listesi</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+		integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+		crossorigin="anonymous"></link>
+
+	<!-- Optional theme -->
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+		integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+		crossorigin="anonymous"></link>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+		integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+		crossorigin="anonymous"></script>
+</h:head>
+
+<h:body>
+
+	<div class="container">
+
+		<!-- Static navbar -->
+		<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<div class="navbar-brand">Proje</div>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="./list.xhtml">Ana Sayfa</a></li>
+					<li><a href="./sendMail.xhtml">Mail Gönder</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="./">Logout</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+		<!--/.container-fluid --> </nav>
+
+		<div class="jumbotron">
+			<h2>
+				<span class="label label-default">Proje Grup Listesi</span>
+			</h2>
+
+			<h:form>
+				<h:dataTable class="table" value="#{projectBean.students}"
+					var="student">
+					<h:column>
+						<f:facet name="header">Grup No</f:facet>    				
+            #{student.groupNo}
+         </h:column>
+					<h:column>
+						<f:facet name="header">Numara</f:facet>    				
+            #{student.id}
+         </h:column>
+					<h:column>
+						<f:facet name="header">Ad-Soyad</f:facet>
+            #{student.name}
+         </h:column>
+					<h:column>
+						<f:facet name="header">Notu</f:facet>
+						<h:inputText value="#{student.grade}" />
+					</h:column>
+
+					<h:column>
+						<h:commandButton class="btn btn-primary" value="Notu Kaydet"
+							action="#{projectBean.updateGrade(student)}" />
+					</h:column>
+
+					<h:column>
+						<h:commandButton class="btn btn-primary" value="Bilgileri Güncelle"
+							action="#{projectBean.edit(student)}" />
+					</h:column>
+					<h:column>
+						<h:commandButton class="btn btn-primary" value="Sil"
+							action="#{projectBean.delete(student)}" />
+					</h:column>
+				</h:dataTable>
+
+				<h:panelGroup rendered="#{!projectBean.edit}">
+					<div class="jumbotron">
+						<h3>
+							<span class="label label-default">Yeni Öğrenci Ekleme</span>
+						</h3>
+
+						<h:form id="addForm1">
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="input-group input-group-lg">
+
+										<span style="width: 135px;" class="input-group-addon"
+											id="sizing-addon1">Grup No:</span>
+										<h:inputText class="form-control"
+											value="#{projectBean.student.groupNo}"
+											aria-describedby="sizing-addon1" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="input-group input-group-lg">
+
+										<span style="width: 135px;" class="input-group-addon"
+											id="sizing-addon1">Numara:</span>
+										<h:inputText class="form-control"
+											value="#{projectBean.student.id}"
+											aria-describedby="sizing-addon1" />
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="input-group input-group-lg">
+										<span style="width: 135px;" class="input-group-addon"
+											id="sizing-addon1">Ad-Soyad:</span>
+										<h:inputText class="form-control"
+											value="#{projectBean.student.name}"
+											aria-describedby="sizing-addon1" />
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="input-group input-group-lg">
+										<span style="width: 135px;" class="input-group-addon"
+											id="sizing-addon1">Notu:</span>
+										<h:inputText class="form-control"
+											value="#{projectBean.student.grade}"
+											aria-describedby="sizing-addon1" />
+									</div>
+								</div>
+							</div>
+							<h:commandButton class="btn btn-primary" value="Ekle"
+								action="#{projectBean.add}"></h:commandButton>
+						</h:form>
+					</div>
+				</h:panelGroup>
+
+				<h:panelGroup rendered="#{projectBean.edit}">
+					<div class="jumbotron">
+						<h3>
+							<span class="label label-default">Öğrenci Bilgilerini
+								Güncelle</span>
+						</h3>
+
+						<h:form id="editForm1">
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="input-group input-group-lg">
+
+										<span style="width: 135px;" class="input-group-addon"
+											id="sizing-addon1">Grup No:</span>
+										<h:inputText class="form-control"
+											value="#{projectBean.student.groupNo}"
+											aria-describedby="sizing-addon1" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="input-group input-group-lg">
+
+										<span style="width: 135px;" class="input-group-addon"
+											id="sizing-addon1">Numara:</span>
+										<h:inputText class="form-control"
+											value="#{projectBean.student.id}"
+											aria-describedby="sizing-addon1" />
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="input-group input-group-lg">
+										<span style="width: 135px;" class="input-group-addon"
+											id="sizing-addon1">Ad-Soyad:</span>
+										<h:inputText class="form-control"
+											value="#{projectBean.student.name}"
+											aria-describedby="sizing-addon1" />
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="input-group input-group-lg">
+										<span style="width: 135px;" class="input-group-addon"
+											id="sizing-addon1">Notu:</span>
+										<h:inputText class="form-control"
+											value="#{projectBean.student.grade}"
+											aria-describedby="sizing-addon1" />
+									</div>
+								</div>
+							</div>
+							<h:commandButton class="btn btn-primary" value="Kaydet"
+								action="#{projectBean.save}"></h:commandButton>
+						</h:form>
+					</div>
+				</h:panelGroup>
+			</h:form>
+		</div>
+	</div>
+	<!-- /container -->
+
+
+
+</h:body>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+
+</html>
